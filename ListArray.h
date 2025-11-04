@@ -5,7 +5,7 @@
 #include <iostream>
 #include "List.h"
 
-using std:: out_of_range;
+using std::out_of_range;
 using std::ostream;
 
 template <typename T>
@@ -36,7 +36,7 @@ class ListArray : public List<T> {
 
 		~ListArray() {delete[] data;}
 
-		void insert(int pos, T e)
+		void insert(int pos, const T& e) override
 		{
 			if (pos < 0 || pos > n)
 			{
@@ -52,9 +52,9 @@ class ListArray : public List<T> {
 			n++;
 		}
 
-		void append (T e) {insert(n, e);}
+		void append (const T& e) override {insert(n, e);}
 
-		void prepend (T e) {insert(0, e);}
+		void prepend (const T& e) override {insert(0, e);}
 
 		T remove(int pos)
 		{
@@ -81,7 +81,7 @@ class ListArray : public List<T> {
 			return element;
 		}
 
-		T get(int pos) 
+		T get(int pos) const override
 		{
 			if (pos < 0 || pos >= n)
 			{
@@ -90,7 +90,7 @@ class ListArray : public List<T> {
 			return data[pos];
 		}
 
-		int search (T e) 
+		int search (const T& e) const override 
 		{
 			for (int i = 0; i < n; i++)
 			{
@@ -99,20 +99,20 @@ class ListArray : public List<T> {
 			return -1;
 		}
 
-		bool empty() {return n == 0;}
+		bool empty() const override {return n == 0;}
 
-		int size () {return n;}
+		int size () const override {return n;}
 
-		T& operator[] (int pos)
+		T& operator[](int pos)
 		{
-			if (pos < 0 || pos => n)
+			if (pos < 0 || pos >= n)
 			{
 				throw out_of_range("Posicion invalida");
 			}
 			return data[pos];
 		}
 
-		const T& operator[] (int pos) 
+		const T& operator[](int pos) const 
 		{
 			if (pos < 0 || pos >= n)
 			{
@@ -129,11 +129,14 @@ class ListArray : public List<T> {
 template <typename T>
 ostream& operator <<(ostream &out, const ListArray<T> &list)
 {
-	out << "ListArray [ (n=" << list.n << ", max=" << list.max << ") ";
-	for (int i = 0; i < list.n; i++) 
+	out << "List => [";
+	if (list.n > 0) 
 	{
-		out << list.data[i];
-		if (i < list.n - 1) {out << ", ";}
+		out << "\n";
+		for (int i = 0; i < list.n; i++) 
+		{
+			out << "  " <<  list.data[i] << "\n";
+		}
 	}
 	out << " ]";
 	return out;
