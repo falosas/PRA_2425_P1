@@ -1,15 +1,7 @@
 #ifdef LISTA_H
 #define LISTA_H
 
-template <typename T>
-struct Nodo
-{
-	int dato;
-	Nodo<T>* siguiente;
-
-	Nodo(const T& val, Nodo<T> next = nullptr)
-		: dato(val), siguiente(next) {}
-};
+#include <stdexcept>
 
 template <typename T>
 class Lista
@@ -38,6 +30,6 @@ class Lista
 		bool empty();
 
 		int size();
-}
+};
 
 #endif
